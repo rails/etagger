@@ -22,7 +22,8 @@ module Etagger
   private
     def revise_etag(options, additional_options = nil)
       if !options.is_a?(Hash)
-        revise_etag({ etag: options, last_modified: options.try(:updated_at) }.merge(additional_options))
+        last_modified = options.respond_to?(:updated_at) ? options.updated_at : nil
+        revise_etag({ etag: options, last_modified: last_modified }.merge(additional_options))
       elsif etag = options[:etag]
         etags = etaggers.map { |etagger| instance_exec &etagger }.compact
         options.merge etag: [etag, *etags]
