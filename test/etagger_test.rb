@@ -29,4 +29,8 @@ class EtaggerTest < MiniTest::Unit::TestCase
   def test_revises_etag
     assert_equal ['123', 'ab', :cde, [:f]], @controller.fresh_when(etag: '123')
   end
+
+  def test_updated_at_with_array
+    assert_equal [%w(1 2), 'ab', :cde, [:f]], @controller.fresh_when(%w(1 2))
+  end
 end
